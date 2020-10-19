@@ -1,8 +1,7 @@
 package com.huntkey.rx.sceo.method.register.plugin.util;
 
-import com.huntkey.rx.commons.utils.rest.Result;
-import com.huntkey.rx.commons.utils.string.StringUtil;
 import com.huntkey.rx.sceo.method.register.plugin.entity.ParamsVo;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public final class ExecUtil {
         headers.setContentType(mediaType);
         // 发送请求
         HttpEntity<Object> entity = new HttpEntity<Object>(params, headers);
-        if (!StringUtil.isNullOrEmpty(params.getBizDriverIP())) {
+        if (!StringUtils.isEmpty(params.getBizDriverIP())) {
             biz_driver_url = "http://" + params.getBizDriverIP() + "/methodExec/exec";
             RestTemplate rm = new RestTemplate();
             ResponseEntity<Result> responseEntity = rm.exchange(biz_driver_url, HttpMethod.POST, entity, Result.class);

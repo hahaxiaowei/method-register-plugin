@@ -1,6 +1,5 @@
 package com.huntkey.rx.sceo.method.register.plugin.util;
 
-import com.huntkey.rx.commons.utils.rest.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

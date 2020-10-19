@@ -1,10 +1,10 @@
 package com.huntkey.rx.sceo.method.register.plugin;
 
-import com.huntkey.rx.commons.utils.rest.Result;
-import com.huntkey.rx.commons.utils.string.StringUtil;
 import com.huntkey.rx.sceo.method.register.plugin.annotation.MethodRegister;
 import com.huntkey.rx.sceo.method.register.plugin.entity.*;
 import com.huntkey.rx.sceo.method.register.plugin.util.*;
+import com.netflix.discovery.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -112,7 +112,7 @@ public class MethodRegisterScanner {
 
         logger.info("注册方法到EDM start! mri:" + mri.toString());
         try {
-            if (StringUtil.isNullOrEmpty(mri.getEdmClass()) || StringUtil.isNullOrEmpty(mri.getMethodName())) {
+            if (StringUtils.isEmpty(mri.getEdmClass()) || StringUtils.isEmpty(mri.getMethodName())) {
                 logger.error("类名或者方法名为空!");
                 return;
             }
@@ -124,7 +124,7 @@ public class MethodRegisterScanner {
             if (isExistResult.getRetCode() == 1) {
                 logger.info("方法不存在，插入新方法");
                 insertEdm(edmServiceName, mri);
-            } else if (!StringUtil.isNullOrEmpty(isExistResult.getErrMsg()) && isExistResult.getErrMsg().equals(EMD_METHOD_CHECK_ERROR_MSG)) {
+            } else if (!StringUtils.isEmpty(isExistResult.getErrMsg()) && isExistResult.getErrMsg().equals(EMD_METHOD_CHECK_ERROR_MSG)) {
                 logger.error("该方法所属类名不存在,不做操作" + isExistResult);
                 throw new RuntimeException("该方法所属类名不存在,不做操作" + isExistResult);
             } else {
@@ -133,13 +133,13 @@ public class MethodRegisterScanner {
                 logger.info("查询EDM方法 queryUrl:" + queryUrl);
                 Result queryResult = RestUtil.doGet(queryUrl, "");
                 logger.info("查询EDM方法结果:" + queryResult);
-                if (!Result.RECODE_SUCCESS.equals(queryResult.getRetCode()) || StringUtil.isNullOrEmpty(queryResult.getData())) {
+                if (!Result.RECODE_SUCCESS.equals(queryResult.getRetCode()) || queryResult.getData()==null) {
                     return;
                 }
                 EdmMethodAndArgVO edmMethodAndArgVO = JsonToBeanUtil.jsonToObject(queryResult.getData(), EdmMethodAndArgVO.class);
                 logger.info("MethodRegisterInfo里面的数据为：" + mri);
                 logger.info("EdmMethodAndArgVO里面的数据为：" + edmMethodAndArgVO);
-                if (StringUtil.isNullOrEmpty(edmMethodAndArgVO.getEdmMethod_in())) {
+                if (edmMethodAndArgVO.getEdmMethod_in()!=null) {
                     logger.info("方法的基本信息不能为空，注册失败");
                     return;
                 }

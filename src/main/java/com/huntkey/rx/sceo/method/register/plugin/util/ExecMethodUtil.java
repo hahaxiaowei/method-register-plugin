@@ -1,8 +1,8 @@
 package com.huntkey.rx.sceo.method.register.plugin.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huntkey.rx.commons.utils.string.StringUtil;
 import com.huntkey.rx.sceo.method.register.plugin.entity.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,56 +120,56 @@ public class ExecMethodUtil {
             edmMethodArg.setEdmaDataType(IsEqualUtil.dataType(String.valueOf(map.get(params.get(i)))));
             list.add(edmMethodArg);
         }
-        if (!StringUtil.isNullOrEmpty(mri.getProgramCate().getnCode())) {
+        if (!StringUtils.isEmpty(mri.getProgramCate().getnCode())) {
             //更新传入的程序类型
             vo.setEdmmProgramType(mri.getProgramCate().getnCode());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodType().getType())) {
+        if (!StringUtils.isEmpty(mri.getMethodType().getType())) {
             //更新方法的类型同步、异步
             vo.setEdmmMethodType(mri.getMethodType().getType());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodExecType().getType())) {
+        if (!StringUtils.isEmpty(mri.getMethodExecType().getType())) {
             //更新方法的执行类型
             vo.setEdmmExecuteType(mri.getMethodExecType().getType());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getEdmClass())) {
+        if (!StringUtils.isEmpty(mri.getEdmClass())) {
             //更新方法的所属类
             vo.setEdmcName(mri.getEdmClass());
         }
 
-        if (!StringUtil.isNullOrEmpty(IsEqualUtil.methodFullUrl(mri))) {
+        if (!StringUtils.isEmpty(IsEqualUtil.methodFullUrl(mri))) {
             //算法描述
             vo.setEdmmArithmeticDesc(IsEqualUtil.methodFullUrl(mri));
         }
 
-        if (!StringUtil.isNullOrEmpty(ReqType.getReqTypeByReqMethod(mri.getMethodReqType()).getReqType())) {
+        if (!StringUtils.isEmpty(ReqType.getReqTypeByReqMethod(mri.getMethodReqType()).getReqType())) {
             //更新方法的请求类型
             vo.setEdmmRequestType(ReqType.getReqTypeByReqMethod(mri.getMethodReqType()).getReqType());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodExeFrequency().getRate())) {
+        if (!StringUtils.isEmpty(mri.getMethodExeFrequency().getRate())) {
             //更新执行频率
             vo.setEdmmExecRate(mri.getMethodExeFrequency().getRate());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodDesc())) {
+        if (!StringUtils.isEmpty(mri.getMethodDesc())) {
             //更新方法描述
             vo.setEdmmDesc(mri.getMethodDesc());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodCate())) {
+        if (!StringUtils.isEmpty(mri.getMethodCate())) {
             //更新方法分类
             vo.setEdmmTypeName(mri.getMethodCate());
         }
 
-        if (!StringUtil.isNullOrEmpty(mri.getMethodStatus().getStatusCode())) {
+        if (!StringUtils.isEmpty(mri.getMethodStatus().getStatusCode())) {
             //方法的状态：启用 or 未启用
             vo.setEdmmStatus(mri.getMethodStatus().getStatusCode());
         }
-        if (!StringUtil.isNullOrEmpty(mri.getTimeout())) {
+        if (mri.getTimeout()!=null) {
             //同步和异步方法的超时时间
             vo.setTimeout(mri.getTimeout());
         }
